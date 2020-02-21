@@ -39,6 +39,12 @@ module.exports = appInfo => {
         user: [ '/admin', '/edit' ],
       },
     },
+    cluster: {
+      listen: {
+        port: 7001,
+        hostname: '127.0.0.1',
+      },
+    },
     security: {
       csrf: false,
       ctoken: false,

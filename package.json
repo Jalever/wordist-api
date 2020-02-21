@@ -30,7 +30,7 @@
     "node": ">=10.0.0"
   },
   "scripts": {
-    "start": "egg-scripts start --daemon --title=egg-server-wordist-api",
+    "start": "egg-scripts start --port=7001 --daemon --title=egg-server-wordist-api",
     "stop": "egg-scripts stop --title=egg-server-wordist-api",
     "dev": "egg-bin dev",
     "debug": "egg-bin debug",
