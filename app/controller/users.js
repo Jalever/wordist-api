@@ -20,7 +20,10 @@ class UsersController extends Controller {
     const token = ctx.header.authorization;
 
     if (token) {
-      const payload = await app.jwt.verify(token.split(' ')[1], config.jwt.secret); // // 解密，获取payload
+      const payload = await app.jwt.verify(
+        token.split(' ')[1],
+        config.jwt.secret
+      ); // // 解密，获取payload
       const users = await ctx.service.users.getAllUsers();
       ctx.body = {
         payload,
@@ -32,8 +35,6 @@ class UsersController extends Controller {
         code: -1,
       };
     }
-
-
   }
 
   // 注册
@@ -114,8 +115,8 @@ class UsersController extends Controller {
       if (rememberMe * 1) ctx.session.maxAge = this.config.rememberMe;
 
       ctx.body = {
-        successFlag: 'Y',
-        errorMsg: '登录成功！',
+        code: 'Y',
+        message: '登录成功！',
         token: `Bearer ${token}`,
       };
       // ctx.redirect('/');

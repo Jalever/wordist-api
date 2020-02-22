@@ -24,7 +24,7 @@ module.exports = appInfo => {
       },
     },
     middleware: [ 'errorHandler', 'auth' ],
-    rememberMe: 20 * 1000, // 选择记住我之后，session有效时长24 * 60 * 60 * 1000
+    rememberMe: 24 * 60 * 60 * 1000, // 选择记住我之后，session有效时长24 * 60 * 60 * 1000
     errorHandler: {
       match: '/api',
     },
