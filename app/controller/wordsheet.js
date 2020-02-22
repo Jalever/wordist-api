@@ -6,57 +6,14 @@ class TopicsController extends Controller {
   constructor(ctx) {
     super(ctx);
 
-    this.createRule = {
-      accesstoken: 'string',
-      title: 'string',
-      tab: { type: 'enum', values: [ 'ask', 'share', 'job' ], required: false },
-      content: 'string',
-    };
+    this.createRule = {};
   }
 
-  //   show single post
-  // async show() {
-  //   console.log('--------------show--------------');
-  //   const { ctx } = this;
-
-  //   ctx.body = await ctx.service.topics.show({
-  //     id: ctx.params.id,
-  //     mdrender: ctx.query.mdrender !== 'false',
-  //     accesstoken: ctx.query.accesstoken || '',
-  //   });
-  // }
-
-  // show list
-  async getWordsheet() {
+  // get all words of single wordsheet
+  async all() {
     const { ctx } = this;
 
-    ctx.validate(
-      {
-        page: {
-          type: 'string',
-          format: /\d+/,
-          required: false,
-        },
-        tab: {
-          type: 'enum',
-          values: [ 'ask', 'share', 'job', 'good' ],
-          required: false,
-        },
-        limit: {
-          type: 'string',
-          format: /\d+/,
-          required: false,
-        },
-      },
-      ctx.query
-    );
-
-    ctx.body = await ctx.service.wordsheet.read({
-      page: ctx.query.page,
-      tab: ctx.query.tab,
-      limit: ctx.query.limit,
-      mdrender: ctx.query.mdrender !== 'false',
-    });
+    ctx.body = await ctx.service.wordsheet.all();
   }
 
   //   create

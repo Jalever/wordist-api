@@ -33,14 +33,8 @@ class TopicService extends Service {
   //   return result.data.data;
   // }
 
-  async read(params) {
-    // const result = await this.request('/topics', {
-    //   data: params,
-    // });
-
-    // this.checkSuccess(result);
-    // return result.data.data;
-    // const user = await this.app.mysql.get('users', { id: 11 });
+  // get all words of single wordsheet
+  async all() {
     const results = await this.app.mysql.select('wordsheet');
     return results;
   }
@@ -52,14 +46,6 @@ class TopicService extends Service {
       definition,
       example,
     } = params;
-    // const result = await this.request('/topics', {
-    //   method: 'post',
-    //   data: params,
-    //   contentType: 'json',
-    // });
-
-    // this.checkSuccess(result);
-    // return result.data.topic_id;
 
     // insert a record title 'Hello World' to 'posts' table
     const result = await this.app.mysql.insert('wordsheet', {
