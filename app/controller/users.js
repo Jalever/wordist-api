@@ -117,7 +117,10 @@ class UsersController extends Controller {
       ctx.body = {
         code: 'Y',
         message: '登录成功！',
-        token: `Bearer ${token}`,
+        data: {
+          ...user,
+          token: `Bearer ${token}`,
+        },
       };
       // ctx.redirect('/');
     }
