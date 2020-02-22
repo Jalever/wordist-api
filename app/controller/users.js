@@ -119,7 +119,7 @@ class UsersController extends Controller {
         message: '登录成功！',
         token: `Bearer ${token}`,
       };
-      ctx.redirect('/');
+      // ctx.redirect('/');
     }
   }
 }
