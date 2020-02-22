@@ -98,7 +98,7 @@ class UsersController extends Controller {
     };
 
     const token = app.jwt.sign(userToken, config.jwt.secret, {
-      expiresIn: '30000',
+      expiresIn: '60*1000*60',
     }); // token签名
 
     const user = await ctx.service.users.login(username, password);
