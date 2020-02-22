@@ -18,7 +18,7 @@ module.exports = app => {
 
   // wordsheet
   // app.router.resources('topics', '/api/v2/topics', app.controller.topics);
-  router.get('/api/wordsheet/all', app.jwt, controller.wordsheet.getWordsheet);
+  router.get('/api/wordsheet/all', app.jwt, controller.wordsheet.all);
   router.post('/api/wordsheet/create', app.jwt, controller.wordsheet.create);
 
 };
