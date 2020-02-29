@@ -16,8 +16,11 @@ module.exports = app => {
   router.get('/api/users/all', app.jwt, controller.users.getAllUsers);
 
 
+  // articles
+  router.get('/api/article/all', app.jwt, controller.articles.all);
+  router.post('/api/article/create', app.jwt, app.controller.articles.create);
+
   // wordsheet
-  // app.router.resources('topics', '/api/v2/topics', app.controller.topics);
   router.get('/api/wordsheet/all', app.jwt, controller.wordsheet.all);
   router.post('/api/wordsheet/create', app.jwt, controller.wordsheet.create);
 

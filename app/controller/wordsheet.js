@@ -2,7 +2,7 @@
 
 const Controller = require('egg').Controller;
 
-class TopicsController extends Controller {
+class WordsheetController extends Controller {
   constructor(ctx) {
     super(ctx);
 
@@ -13,7 +13,25 @@ class TopicsController extends Controller {
   async all() {
     const { ctx } = this;
 
-    ctx.body = await ctx.service.wordsheet.all();
+    ctx.validate(
+      {
+        article_id: {
+          type: 'string',
+          format: /\d+/,
+          required: true,
+        },
+      },
+      ctx.request.body
+    );
+
+
+    const results = await ctx.service.wordsheet.all(ctx.request.body);
+
+    ctx.body = {
+      code: '',
+      message: '',
+      data: results,
+    };
   }
 
   //   create
@@ -41,6 +59,11 @@ class TopicsController extends Controller {
           format: /\d+/,
           required: false,
         },
+        article_id: {
+          type: 'string',
+          format: /\d+/,
+          required: true,
+        },
       },
       ctx.request.body
     );
@@ -63,4 +86,4 @@ class TopicsController extends Controller {
   // }
 }
 
-module.exports = TopicsController;
+module.exports = WordsheetController;

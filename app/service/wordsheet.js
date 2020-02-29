@@ -8,34 +8,13 @@ class TopicService extends Service {
     this.root = 'https://cnodejs.org/api/v1';
   }
 
-  // 申请数据
-  async request(url, opts) {
-    url = `${this.root}${url}`;
-    opts = Object.assign(
-      {
-        timeout: [ '30s', '30s' ],
-        dataType: 'json',
+  // 获取指定article中wordsheet的全部数据
+  async all(params) {
+    const results = await this.app.mysql.select('wordsheet', {
+      where: {
+        article_id: params.article_id,
       },
-      opts
-    );
-    return this.ctx.curl(url, opts);
-  }
-
-  // async show(params) {
-  //   const result = await this.request(`/topic/${params.id}`, {
-  //     data: {
-  //       mdrender: params.mdrender,
-  //       accesstoken: params.accesstoken,
-  //     },
-  //   });
-  //   this.checkSuccess(result);
-
-  //   return result.data.data;
-  // }
-
-  // get all words of single wordsheet
-  async all() {
-    const results = await this.app.mysql.select('wordsheet');
+    });
     return results;
   }
 
@@ -45,6 +24,7 @@ class TopicService extends Service {
       type,
       definition,
       example,
+      article_id,
     } = params;
 
     // insert a record title 'Hello World' to 'posts' table
@@ -53,19 +33,11 @@ class TopicService extends Service {
       type,
       definition,
       example,
+      article_id,
     });
+
     const insertSuccess = result.affectedRows === 1;
     return insertSuccess;
-  }
-
-  async update(params) {
-    const result = await this.request('/topics/update', {
-      method: 'post',
-      data: params,
-      contentType: 'json',
-    });
-
-    this.checkSuccess(result);
   }
 
   checkSuccess(result) {
