@@ -23,5 +23,6 @@ module.exports = app => {
   // wordsheet
   router.get('/api/wordsheet/all', app.jwt, controller.wordsheet.all);
   router.post('/api/wordsheet/create', app.jwt, controller.wordsheet.create);
+  router.delete('/api/wordsheet/delete', app.jwt, controller.wordsheet.delete);
 
 };

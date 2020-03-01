@@ -9,7 +9,7 @@ class WordsheetController extends Controller {
     this.createRule = {};
   }
 
-  // get all words of single wordsheet
+  // GET: get all words of single wordsheet
   async all() {
     const { ctx } = this;
 
@@ -21,58 +21,64 @@ class WordsheetController extends Controller {
           required: true,
         },
       },
-      ctx.request.body
+      ctx.query
     );
 
+    const results = await ctx.service.wordsheet.all(ctx.query);
 
-    const results = await ctx.service.wordsheet.all(ctx.request.body);
-
-    ctx.body = {
-      code: '',
-      message: '',
-      data: results,
-    };
+    ctx.body = results
   }
 
   //   create
   async create() {
     const { ctx } = this;
-    ctx.validate(
-      {
-        name: {
-          type: 'string',
-          format: /\d+/,
-          required: true,
-        },
-        type: {
-          type: 'string',
-          values: /\d+/,
-          required: false,
-        },
-        definition: {
-          type: 'string',
-          format: /\d+/,
-          required: false,
-        },
-        example: {
-          type: 'string',
-          format: /\d+/,
-          required: false,
-        },
-        article_id: {
-          type: 'string',
-          format: /\d+/,
-          required: true,
-        },
-      },
-      ctx.request.body
-    );
+    // ctx.validate(
+    //   {
+    //     name: {
+    //       type: 'string',
+    //       format: /\d+/,
+    //       required: true,
+    //     },
+    //     type: {
+    //       type: 'string',
+    //       values: /\d+/,
+    //       required: false,
+    //     },
+    //     definition: {
+    //       type: 'string',
+    //       format: /\d+/,
+    //       required: false,
+    //     },
+    //     example: {
+    //       type: 'string',
+    //       format: /\d+/,
+    //       required: false,
+    //     },
+    //     article_id: {
+    //       type: 'string',
+    //       format: /\d+/,
+    //       required: true,
+    //     },
+    //   },
+    //   ctx.request.body
+    // );
 
     const isSuccess = await ctx.service.wordsheet.create(ctx.request.body);
     ctx.body = {
       isSuccess,
     };
     ctx.status = 201;
+  }
+
+  //   delete
+  async delete() {
+    const { ctx } = this;
+
+    const isSuccess = await ctx.service.wordsheet.delete(ctx.request.body);
+    ctx.body = {
+      isSuccess,
+    };
+    // ctx.status = 201;
   }
 
   // async update() {

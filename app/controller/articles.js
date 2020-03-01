@@ -13,16 +13,18 @@ class ArticlesController extends Controller {
     const { ctx } = this;
 
     const result = await ctx.service.articles.all();
-    ctx.body = {
-      code: '',
-      message: '',
-      data: result,
-    };
+    ctx.body = result;
   }
 
-  // 创建
+  // POST: 创建
   create() {
     const { ctx } = this;
+
+    // console.warn('ctx: ');
+    // console.log(ctx);
+    // console.warn('ctx.request.body: ');
+    // console.log(ctx.request.body);
+    // console.log("\n");
 
     ctx.validate(
       {
