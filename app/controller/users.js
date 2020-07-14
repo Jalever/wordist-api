@@ -40,6 +40,10 @@ class UsersController extends Controller {
   // 注册
   async register() {
     const { ctx } = this;
+    console.warn('ctx');
+    console.log(ctx);
+    console.log('\n');
+
     const { username, password, phone } = ctx.request.body;
     const avatar = ctx.request.files ? ctx.request.files[0] : undefined;
     // 默认头像
