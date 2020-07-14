@@ -2,49 +2,30 @@
 
 const Service = require('egg').Service;
 
-class TopicService extends Service {
+class WordsheetService extends Service {
   constructor(ctx) {
     super(ctx);
     this.root = 'https://cnodejs.org/api/v1';
   }
 
-  // 申请数据
-  async request(url, opts) {
-    url = `${this.root}${url}`;
-    opts = Object.assign(
-      {
-        timeout: [ '30s', '30s' ],
-        dataType: 'json',
+  // 获取指定article中wordsheet的全部数据
+  async all(params) {
+    const results = await this.app.mysql.select('wordsheet', {
+      where: {
+        article_id: params.article_id,
       },
-      opts
-    );
-    return this.ctx.curl(url, opts);
-  }
-
-  // async show(params) {
-  //   const result = await this.request(`/topic/${params.id}`, {
-  //     data: {
-  //       mdrender: params.mdrender,
-  //       accesstoken: params.accesstoken,
-  //     },
-  //   });
-  //   this.checkSuccess(result);
-
-  //   return result.data.data;
-  // }
-
-  // get all words of single wordsheet
-  async all() {
-    const results = await this.app.mysql.select('wordsheet');
+    });
     return results;
   }
 
+  // 获取指定article中新增一个单词
   async create(params) {
     const {
       name,
       type,
       definition,
       example,
+      article_id,
     } = params;
 
     // insert a record title 'Hello World' to 'posts' table
@@ -53,33 +34,40 @@ class TopicService extends Service {
       type,
       definition,
       example,
+      article_id,
     });
+
     const insertSuccess = result.affectedRows === 1;
     return insertSuccess;
   }
 
-  async update(params) {
-    const result = await this.request('/topics/update', {
-      method: 'post',
-      data: params,
-      contentType: 'json',
+  // 删除指定article中新增一个单词
+  async delete(params) {
+    const {
+      id
+    } = params;
+
+    // insert a record title 'Hello World' to 'posts' table
+    const result = await this.app.mysql.delete('wordsheet', {
+      id
     });
 
-    this.checkSuccess(result);
+    const insertSuccess = result.affectedRows === 1;
+    return insertSuccess;
   }
 
-  checkSuccess(result) {
-    if (result.status !== 200) {
-      const errorMsg =
-        result.data && result.data.error_msg
-          ? result.data.error_msg
-          : 'unknown error';
-      this.ctx.throw(result.status, errorMsg);
-    }
-    if (!result.data.success) {
-      this.ctx.throw(500, 'remote response error', { data: result.data });
-    }
-  }
+  // checkSuccess(result) {
+  //   if (result.status !== 200) {
+  //     const errorMsg =
+  //       result.data && result.data.error_msg
+  //         ? result.data.error_msg
+  //         : 'unknown error';
+  //     this.ctx.throw(result.status, errorMsg);
+  //   }
+  //   if (!result.data.success) {
+  //     this.ctx.throw(500, 'remote response error', { data: result.data });
+  //   }
+  // }
 }
 
-module.exports = TopicService;
+module.exports = WordsheetService;
